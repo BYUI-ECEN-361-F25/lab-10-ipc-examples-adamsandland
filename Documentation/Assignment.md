@@ -1,5 +1,5 @@
 # ECEN-361 Lab-10: IPC-Examples
-     Student Name:  ___________________________________
+     Student Name:  Adam Sandland
 
 ## Introduction and Objectives of the Lab
 
@@ -80,12 +80,12 @@ Now make sure to write the code inside of the Semaphore_Toggle_Task function tha
 
 <br>
 1. How did your task ‘wait’ for the debounced button? <br>
-<mark>_______________________________________________________ </mark>
+<mark>The task is waiting for a semaphore to return. If it does, then it toggles. If it doesn't then it is in standby. The Debounce() function is called to return that semaphore.</mark>
 <br>
 <br><br>
 
 2.)	How long is the time between the button interrupt coming in and it being enabled again? <br>
-<mark>_______________________________________________________ </mark>
+<mark>30mS because of the StartDebounce() function. </mark>
 ><br>
 > <br>
 
@@ -96,11 +96,11 @@ Now create a second task (semaphore_Toggle_D3) -- <p>
 
 
 3.)	Do both of (D4 and D3) toggle with a single button press?  Describe the behavior?  <br>
-<mark>_________________________________________________________________________________<br><br>
+<mark>D3 and D4 toggle with a button press, but it goes D3 on one press, then D4 on one press, then D3, then D4....etc.<br><br>
 
 4.)	Now change one of the priorities of these two tasks, re-compile,  and re-run.
 How has the behavior changed?
-<mark>_________________________________________________________________________________<br><br>
+<mark>Since D3 is now lower priority, it will never be called since D4 is being called instead.<br><br>
 
 
 ## Part 2: Mutexes
@@ -152,12 +152,12 @@ current count. The first two processes are done for you "Mutex_CountDownTask" an
 >
 ><br>
 >7.)	Comment on the Up/Down/ ”—” display that you see.  <br><br>
-><mark>___________________________________________________________________________________________________________<br><br><p>
+><mark>It seems that the up task, down task and null task are all figting for control of the display. Sometimes its a number, sometimes the number goes up, sometimes down, sometimes its a "--"<br><br><p>
 
 
 >8.)	Is there a ‘priority’ associated with the Mutex?  If so, how can it be changed?
 ><br>  
-><mark>___________________________________________________________________________________________________________<br><br>
+><mark>The Mutex tasks use priority Low, but the Mutex itself does not have its own priority.<br><br>
 <p>
 
 ><br>
@@ -165,7 +165,7 @@ current count. The first two processes are done for you "Mutex_CountDownTask" an
 
 >  Change the priority of the Reset to be osPriorityIdle.  This is the lowest priority available. Note that you will not find this priority type listed in the .ioc configuration, as it is intended to be used for idle threads. This priority must be manually set in the code.<br>
 ><br> Did you see any effect on the ability of Button_3 to reset the count?<br><br>
-><mark>___________________________________________________________________________________________________________<br><br>
+><mark>I personally see no change from behavior before to behavior now.<br><br>
 >
 ---
 <!--------------------------------------------------------------------------------->
@@ -196,12 +196,12 @@ display digit.
 >
 >10.) This timer was created via the GUI  (.IOC file).  It’s type is *“osTimerPeriodic”* which means it repeats over and over.<br><br>
 What other options can a Software Timer take to change its Type and operation? <br>
-><mark>___________________________________________________________________________________________________________<br><br>
+><mark>osTimerOnce - which only runs the timer once before ending.<br><br>
 
 >11).	The debounce for the switches here used an osDelay() call (non-blocking).  Is there any advantage to using a SWTimer here instead?<br>
 > Explain why or why not?
 >
-><mark>___________________________________________________________________________________________________________<br><br>
+><mark>Its effectively the same in function, a non-blocking timer, but it can by a bit lighter on memory.<br><br>
 
 
 <!--------------------------------------------------------------------------------->
@@ -216,7 +216,7 @@ What other options can a Software Timer take to change its Type and operation? <
 >2.	We only used a binary semaphore in this lab for the switch presses.  Change it so that presses are accumulated through a counting semaphore and then handled as they are taken off.<br><br>
 >Describe any issues with this approach
 >
-><mark>___________________________________________________________________________________________________________<br><br>
+><mark>I changed the button press to 10, and all of a sudden, we are now getting presses where it toggles twice on one button. I think this is due to the effect of software debouncing, only counting it as one button press (and sometimes 2)<br><br>
 >
 
 >
